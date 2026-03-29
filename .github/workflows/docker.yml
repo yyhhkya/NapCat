@@ -65,27 +65,27 @@ jobs:
         if: env.skip != 'true'
         uses: docker/setup-buildx-action@master
         
-      # - name: 登录 docker hub
-      #   if: env.skip != 'true'
-      #   uses: docker/login-action@master
-      #   with:
-      #     username: ${{ github.repository_owner }}
-      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: 登录 docker hub
+        if: env.skip != 'true'
+        uses: docker/login-action@master
+        with:
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
           
-      # - name: 打包并推送
-      #   if: env.skip != 'true'
-      #   uses: docker/build-push-action@master
-      #   with:
-      #     context: .
-      #     provenance: false
-      #     platforms: linux/amd64,linux/arm64
-      #     push: true
-      #     tags: |
-      #       docker.io/${{ github.repository_owner }}/napcat:latest
-      #       docker.io/${{ github.repository_owner }}/napcat:${{ env.tag }}
-      # - name: 退出登录
-      #   if: env.skip != 'true'
-      #   run: docker logout
+      - name: 打包并推送
+        if: env.skip != 'true'
+        uses: docker/build-push-action@master
+        with:
+          context: .
+          provenance: false
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            docker.io/${{ github.repository_owner }}/napcat:latest
+            docker.io/${{ github.repository_owner }}/napcat:${{ env.tag }}
+      - name: 退出登录
+        if: env.skip != 'true'
+        run: docker logout
 
       - name: 保存离线镜像包
         if: env.skip != 'true'
