@@ -44,8 +44,10 @@ RUN curl -o napcat.sh https://raw.githubusercontent.com/NapNeko/napcat-linux-ins
     bash napcat.sh
 
 RUN sed -i '/^#!\/bin\/bash/a rm -f /tmp/.X1-lock && [ -f /run/dbus/pid ] && rm -f /run/dbus/pid' ./launcher.sh && \
-    sed -i '/export DISPLAY=:1/i sleep 3' ./launcher.sh
-
+    sed -i '/Xvfb/a xvfb_pid=$!' ./launcher.sh && \
+    sed -i '/export DISPLAY=:1/i sleep 3' ./launcher.sh && \
+    sed -i '/export DISPLAY=:1/i trap "kill ${xvfb_pid} >/dev/null 2>&1 || true" EXIT' ./launcher.sh
+    
 # 声明挂载目录
 VOLUME ["/app/.config/QQ", "/app/napcat/config", "/app/napcat/plugins"]
 # QQ 持久化数据路径：/app/.config/QQ
