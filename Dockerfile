@@ -6,24 +6,34 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Shanghai
 
 # 安装必要的软件包 + 设置时区 + 清理缓存
+# RUN apt-get update && apt-get install -y \
+#     libnss3 \
+#     libnotify4 \
+#     libsecret-1-0 \
+#     libgbm1 \
+#     libasound2 \
+#     fonts-wqy-zenhei \
+#     gnutls-bin \
+#     libglib2.0-dev \
+#     libgtk-3-0 \
+#     libxss1 \
+#     libxtst6 \
+#     libatspi2.0-0 \
+#     libx11-xcb1 \
+#     ffmpeg \
+#     unzip \
+#     curl \
+#     jq \
+#     sudo \
+#     tzdata && \
+#     ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime && \
+#     echo "${TZ}" > /etc/timezone && \
+#     dpkg-reconfigure --frontend noninteractive tzdata && \
+#     apt-get autoremove -y && \
+#     apt-get clean && \
+#     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 RUN apt-get update && apt-get install -y \
-    libnss3 \
-    libnotify4 \
-    libsecret-1-0 \
-    libgbm1 \
-    libasound2 \
-    fonts-wqy-zenhei \
-    gnutls-bin \
-    libglib2.0-dev \
-    libgtk-3-0 \
-    libxss1 \
-    libxtst6 \
-    libatspi2.0-0 \
-    libx11-xcb1 \
-    ffmpeg \
-    unzip \
     curl \
-    jq \
     sudo \
     tzdata && \
     ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime && \
