@@ -24,8 +24,8 @@ jobs:
         
       - name: 获取版本号
         run: |
-          res=$(curl -sSL https://api.github.com/repos/NapNeko/NapCatQQ/releases/latest)
-          current_tag=$(curl -sSL https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r '.tag_name')
+          res=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -sSL https://api.github.com/repos/NapNeko/NapCatQQ/releases/latest)
+          current_tag=$(curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -sSL https://api.github.com/repos/${{ github.repository }}/releases/latest | jq -r '.tag_name')
           
           tag=$(echo "$res" | jq -r '.tag_name')
           body=$(echo "$res" | jq -r '.body')
