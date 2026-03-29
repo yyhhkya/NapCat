@@ -44,6 +44,9 @@ WORKDIR /app
 RUN curl -o napcat.sh https://raw.githubusercontent.com/NapNeko/napcat-linux-installer/refs/heads/main/install.sh && \
     bash napcat.sh
 
+# 修改 launcher.sh 分辨率
+RUN sed -i 's/1x1x8/1080x760x16/' ./launcher.sh
+
 # 声明挂载目录
 VOLUME ["/app/.config/QQ", "/app/napcat/config", "/app/napcat/plugins"]
 # QQ 持久化数据路径：/app/.config/QQ
