@@ -69,7 +69,7 @@ jobs:
         if: env.skip != 'true'
         uses: docker/login-action@master
         with:
-          username: ${{ github.repository_owner }}
+          username: ${{ secrets.username }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           
       - name: 打包并推送
@@ -81,8 +81,8 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            docker.io/${{ github.repository_owner }}/napcat:latest
-            docker.io/${{ github.repository_owner }}/napcat:${{ env.tag }}
+            docker.io/${{ secrets.username }}/napcat:latest
+            docker.io/${{ secrets.username }}/napcat:${{ env.tag }}
       - name: 退出登录
         if: env.skip != 'true'
         run: docker logout
@@ -91,11 +91,11 @@ jobs:
         if: env.skip != 'true'
         run: |
           mkdir -p /opt/dk
-          docker pull --platform linux/amd64 ${{ github.repository_owner }}/napcat:${{ env.tag }}
-          docker save -o /opt/dk/napcat-x86_64-docker.tar ${{ github.repository_owner }}/napcat:${{ env.tag }}
+          docker pull --platform linux/amd64 ${{ secrets.username }}/napcat:${{ env.tag }}
+          docker save -o /opt/dk/napcat-x86_64-docker.tar ${{ secrets.username }}/napcat:${{ env.tag }}
 
-          docker pull --platform linux/arm64 ${{ github.repository_owner }}/napcat:${{ env.tag }}
-          docker save -o /opt/dk/napcat-arm64-docker.tar ${{ github.repository_owner }}/napcat:${{ env.tag }}
+          docker pull --platform linux/arm64 ${{ secrets.username }}/napcat:${{ env.tag }}
+          docker save -o /opt/dk/napcat-arm64-docker.tar ${{ secrets.username }}/napcat:${{ env.tag }}
 
           sudo timedatectl set-timezone "Asia/Shanghai"
           echo "build_time=$(date '+%Y年%m月%d日%H:%M:%S' | jq -sRr @uri)" >> $GITHUB_ENV
@@ -106,7 +106,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           body: |
-           > ### ![](https://img.shields.io/badge/%E7%BC%96%E8%AF%91%E6%97%B6%E9%97%B4-${{ env.build_time }}-8267?logo=github&labelColor=%E9%A1%BB)![](https://img.shields.io/github/downloads/${{ github.repository }}/${{ env.tag }}/total?label=%E4%B8%8B%E8%BD%BD%E6%AC%A1%E6%95%B0&logo=github)![](https://img.shields.io/docker/pulls/${{ github.repository_owner }}/napcat?logo=docker&label=Docker拉取量&link=https://hub.docker.com/r/${{ github.repository_owner }}/napcat)![](https://img.shields.io/docker/v/${{ github.repository_owner }}/napcat?logo=docker&label=最新版本&link=https://hub.docker.com/r/${{ github.repository_owner }}/napcat)![](https://img.shields.io/docker/image-size/${{ github.repository_owner }}/napcat/${{ env.tag }}?logo=docker&label=大小&link=https://hub.docker.com/r/${{ github.repository_owner }}/napcat)
+           > ### ![](https://img.shields.io/badge/%E7%BC%96%E8%AF%91%E6%97%B6%E9%97%B4-${{ env.build_time }}-8267?logo=github&labelColor=%E9%A1%BB)![](https://img.shields.io/github/downloads/${{ github.repository }}/${{ env.tag }}/total?label=%E4%B8%8B%E8%BD%BD%E6%AC%A1%E6%95%B0&logo=github)![](https://img.shields.io/docker/pulls/${{ secrets.username }}/napcat?logo=docker&label=Docker拉取量&link=https://hub.docker.com/r/${{ secrets.username }}/napcat)![](https://img.shields.io/docker/v/${{ secrets.username }}/napcat?logo=docker&label=最新版本&link=https://hub.docker.com/r/${{ secrets.username }}/napcat)![](https://img.shields.io/docker/image-size/${{ secrets.username }}/napcat/${{ env.tag }}?logo=docker&label=大小&link=https://hub.docker.com/r/${{ secrets.username }}/napcat)
 
            ${{ env.update }}
            
