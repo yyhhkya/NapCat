@@ -1,4 +1,6 @@
-# NapCat.Linux.Launcher - 新式非入侵式启动器 
+# NapCat.Linux.Launcher - 新式非入侵式启动器
+
+![](https://img.shields.io/github/v/release/NapNeko/NapCatQQ?logo=github&label=官方最新版本&link=https://github.com/NapNeko/NapCatQQ)![](https://img.shields.io/docker/v/mlikiowa/napcat-docker?logo=docker&label=官方最新版本&link=https://hub.docker.com/r/mlikiowa/napcat-docker)
 
 - 不破坏 NT 自身文件
 - 缓存与 NapCat 位于 `/app` 目录
