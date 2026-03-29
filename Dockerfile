@@ -27,7 +27,6 @@ RUN apt-get update && apt-get install -y \
     dbus-user-session \
     curl \
     jq \
-    gosu \
     sudo \
     tzdata && \
     ln -sf /usr/share/zoneinfo/${TZ} /etc/localtime && \
@@ -44,7 +43,8 @@ WORKDIR /app
 RUN curl -o napcat.sh https://raw.githubusercontent.com/NapNeko/napcat-linux-installer/refs/heads/main/install.sh && \
     bash napcat.sh
 
-RUN sed -i '/^#!\/bin\/bash/a rm -f /tmp/.X1-lock && [ -f /run/dbus/pid ] && rm -f /run/dbus/pid' ./launcher.sh
+RUN sed -i '/^#!\/bin\/bash/a rm -f /tmp/.X1-lock && [ -f /run/dbus/pid ] && rm -f /run/dbus/pid' ./launcher.sh && \
+    sed -i '/export DISPLAY=:1/i sleep 3' ./launcher.sh
 
 # 声明挂载目录
 VOLUME ["/app/.config/QQ", "/app/napcat/config", "/app/napcat/plugins"]
